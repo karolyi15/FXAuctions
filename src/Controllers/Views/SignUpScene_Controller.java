@@ -2,7 +2,6 @@ package Controllers.Views;
 
 import Controllers.MainApp;
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class SignUpScene_Controller {
@@ -11,11 +10,17 @@ public class SignUpScene_Controller {
 
     @FXML
     private TextField username_TextField;
+
+    //Handlers
     @FXML
-    private PasswordField password_PasswordField;
+    private void onHandleCancel(){
 
-    public void setMainApp(MainApp mainApp){
+        this.mainApp.showSignInScene();
+    }
 
+    //Setters & Getters
+    public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
+
 }

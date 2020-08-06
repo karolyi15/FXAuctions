@@ -1,5 +1,8 @@
 package Controllers;
 
+import Controllers.Models.User;
+import Controllers.Views.SignInScene_Controller;
+import Controllers.Views.SignUpScene_Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +18,8 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
+    private User activeUser;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -23,7 +28,7 @@ public class MainApp extends Application {
         this.primaryStage.setResizable(false);
 
         this.initRootLayout();
-        this.showSignUpScene();
+        this.showSignInScene();
     }
 
     private void initRootLayout(){
@@ -50,6 +55,29 @@ public class MainApp extends Application {
     }
 
 
+    public void showSignInScene(){
+
+        try {
+
+            //Load Fxml File
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("Views/SignInScene_UI.fxml"));
+            AnchorPane signInScene = (AnchorPane) loader.load();
+
+            //Set Controller
+            SignInScene_Controller controller = loader.getController();
+            controller.setMainApp(this);
+
+            //Set
+            this.rootLayout.setCenter(signInScene);
+
+        }catch (IOException e){
+
+            e.printStackTrace();
+        }
+
+    }
+
     public void showSignUpScene(){
 
         try {
@@ -58,6 +86,10 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("Views/SignUpScene_UI.fxml"));
             AnchorPane signUpScene = (AnchorPane) loader.load();
+
+            //Set Controller
+            SignUpScene_Controller controller = loader.getController();
+            controller.setMainApp(this);
 
             //Set
             this.rootLayout.setCenter(signUpScene);
