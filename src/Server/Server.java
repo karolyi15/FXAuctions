@@ -62,7 +62,7 @@ public class Server {
 
     }
 
-    public void terminateServer(){
+    public void terminate(){
 
         this.running = false;
     }

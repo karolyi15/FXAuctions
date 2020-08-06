@@ -3,9 +3,9 @@ package Controllers;
 import Controllers.Models.User;
 import Controllers.Views.SignInScene_Controller;
 import Controllers.Views.SignUpScene_Controller;
+import Server.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -15,10 +15,24 @@ import java.io.IOException;
 
 public class MainApp extends Application {
 
+    //********************************************************************************************************//
+    //********************************************* CLASS FIELDS *********************************************//
+
     private Stage primaryStage;
     private BorderPane rootLayout;
 
+    private Client client;
     private User activeUser;
+
+    //********************************************************************************************************//
+    //******************************************** CLASS METHODS *********************************************//
+
+    //Constructor
+    public MainApp(){
+
+        this.client = new Client();
+        this.client.start();
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -101,6 +115,14 @@ public class MainApp extends Application {
 
     }
 
+    //Setters & Getters
+
+
+    public Client getClient() {
+        return this.client;
+    }
+
+    //Main
     public static void main(String[] args) {
         launch(args);
     }

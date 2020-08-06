@@ -12,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 
 public class SignInScene_Controller {
 
+    //********************************************************************************************************//
+    //********************************************* CLASS FIELDS *********************************************//
+
     private MainApp mainApp;
 
     @FXML
@@ -22,6 +25,9 @@ public class SignInScene_Controller {
     private PasswordField password_PasswordField;
     @FXML
     private Button signIn_Button;
+
+    //********************************************************************************************************//
+    //******************************************** CLASS METHODS *********************************************//
 
     //Constructor
     @FXML
@@ -34,6 +40,9 @@ public class SignInScene_Controller {
     @FXML
     private void onHandleSignIn(){
 
+        this.mainApp.getClient().write("SignIn");
+        String serverResponse = this.mainApp.getClient().read();
+        System.out.println(serverResponse);
     }
 
     private void onHandleCreateAccount(){
