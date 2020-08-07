@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class SignInScene_Controller {
 
@@ -51,7 +53,7 @@ public class SignInScene_Controller {
             this.mainApp.getClient().write(outputJson.toJSONString());
 
             String inputString = this.mainApp.getClient().read();
-            System.out.println(inputString);
+            this.parseRequestState(inputString);
 
         }else{
 
@@ -60,6 +62,34 @@ public class SignInScene_Controller {
             alert.setContentText("Please enter all the fields");
 
             alert.showAndWait();
+        }
+    }
+
+    private void parseRequestState(String inputString){
+
+        JSONParser parser = new JSONParser();
+
+        try{
+
+            JSONObject inputJson = (JSONObject) parser.parse(inputString);
+            boolean requestState = (boolean) inputJson.get("RequestState");
+
+            if(requestState){
+
+                System.out.println("Starting App");
+
+            }else{
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Error Getting User Information");
+                alert.setContentText("Invalid username or password");
+
+                alert.showAndWait();
+            }
+
+        }catch (ParseException e){
+
+            e.printStackTrace();
         }
     }
 
