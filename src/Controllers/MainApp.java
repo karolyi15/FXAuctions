@@ -1,6 +1,7 @@
 package Controllers;
 
 import Controllers.Models.User;
+import Controllers.Views.AuctionsManager_Controller;
 import Controllers.Views.MenuScene_Controller;
 import Controllers.Views.SignInScene_Controller;
 import Controllers.Views.SignUpScene_Controller;
@@ -155,6 +156,50 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
 
+    }
+
+    public void showAuctionsManager(BorderPane borderPane){
+
+        try {
+
+            //Load Fxml File
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("Views/AuctionsManager_UI.fxml"));
+            AnchorPane auctionManagerScene = (AnchorPane) loader.load();
+
+            //Set Controller
+            AuctionsManager_Controller controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setBorderPane(borderPane);
+
+            //Set
+           borderPane.setCenter(auctionManagerScene);
+
+        }catch (IOException e){
+
+            e.printStackTrace();
+        }
+    }
+
+    public void showAuctionCreatorScene(BorderPane borderPane){
+
+        try {
+
+            //Load Fxml File
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("Views/AuctionsCreatorScene_UI.fxml"));
+            AnchorPane auctionsCreatorScene = (AnchorPane) loader.load();
+
+            //Set Controller
+
+
+            //Set
+            borderPane.setCenter(auctionsCreatorScene);
+
+        }catch (IOException e){
+
+            e.printStackTrace();
+        }
     }
 
     //Setters & Getters

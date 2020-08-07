@@ -16,7 +16,7 @@
                <children>
                   <VBox layoutX="59.0" layoutY="207.0" prefHeight="277.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <Button fx:id="auctions_Button" mnemonicParsing="false" prefHeight="26.0" prefWidth="220.0" text="Auctions" />
+                        <Button fx:id="auctions_Button" mnemonicParsing="false" onAction="#onHandleAuctions" prefHeight="26.0" prefWidth="220.0" text="Auctions" />
                         <Button fx:id="notifications_Button" mnemonicParsing="false" prefHeight="26.0" prefWidth="213.0" text="Notifications" />
                         <Button fx:id="famous_Button" mnemonicParsing="false" prefHeight="26.0" prefWidth="230.0" text="Famous" />
                         <Button fx:id="settings_Button" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" text="Settings" />

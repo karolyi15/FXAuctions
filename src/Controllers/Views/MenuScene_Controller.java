@@ -50,11 +50,20 @@ public class MenuScene_Controller {
         this.username_Label.setText(username);
     }
 
+    //Handlers
+    @FXML
+    private void onHandleAuctions(){
+
+        this.mainApp.showAuctionsManager(this.displayPanel_BorderPane);
+    }
+
+
     //Setters & Getters
     public void setMainApp(MainApp mainApp) {
 
         this.mainApp = mainApp;
 
         this.initUser();
+        this.mainApp.showAuctionsManager(this.displayPanel_BorderPane);
     }
 }
