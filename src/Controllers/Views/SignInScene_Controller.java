@@ -1,6 +1,7 @@
 package Controllers.Views;
 
 import Controllers.MainApp;
+import Controllers.Models.User;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -76,7 +77,8 @@ public class SignInScene_Controller {
 
             if(requestState){
 
-                System.out.println("Starting App");
+                this.mainApp.setActiveUser(new User((JSONObject) inputJson.get("User")));
+                this.mainApp.showMenuScene();
 
             }else{
 

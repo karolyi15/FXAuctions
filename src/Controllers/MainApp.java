@@ -1,6 +1,7 @@
 package Controllers;
 
 import Controllers.Models.User;
+import Controllers.Views.MenuScene_Controller;
 import Controllers.Views.SignInScene_Controller;
 import Controllers.Views.SignUpScene_Controller;
 import Server.Client;
@@ -133,9 +134,40 @@ public class MainApp extends Application {
 
     }
 
+    public void showMenuScene(){
+
+        try {
+
+            //Load Fxml File
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("Views/MenuScene_UI.fxml"));
+            AnchorPane menuScene = (AnchorPane) loader.load();
+
+            //Set Controller
+            MenuScene_Controller controller = loader.getController();
+            controller.setMainApp(this);
+
+            //Set
+            this.rootLayout.setCenter(menuScene);
+
+        }catch (IOException e){
+
+            e.printStackTrace();
+        }
+
+    }
+
     //Setters & Getters
     public Client getClient() {
         return this.client;
+    }
+
+    public User getActiveUser() {
+        return this.activeUser;
+    }
+
+    public void setActiveUser(User activeUser) {
+        this.activeUser = activeUser;
     }
 
     //Main

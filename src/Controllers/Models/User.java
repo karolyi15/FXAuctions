@@ -9,7 +9,7 @@ public class User {
     private StringProperty name;
     private StringProperty username;
     private StringProperty email;
-    private StringProperty country;
+    private Countries country;
     private AccountType accountType;
 
     //Constructor
@@ -18,7 +18,7 @@ public class User {
         this.name = new SimpleStringProperty("");
         this.username = new SimpleStringProperty("");
         this.email = new SimpleStringProperty("");
-        this.country = new SimpleStringProperty("");
+        this.country = Countries.DEFAULT;
         this.accountType = AccountType.NORMAL;
     }
 
@@ -27,8 +27,17 @@ public class User {
         this.name = new SimpleStringProperty(name);
         this.username = new SimpleStringProperty(username);
         this.email = new SimpleStringProperty(email);
-        this.country = new SimpleStringProperty(country);
+        this.country = Countries.valueOf(country);
         this.accountType = type;
+    }
+
+    public User(JSONObject userData){
+
+        this.name = new SimpleStringProperty((String) userData.get("Name"));
+        this.username = new SimpleStringProperty((String) userData.get("Username"));
+        this.email = new SimpleStringProperty((String) userData.get("Email"));
+        this.country = Countries.valueOf((String) userData.get("Country"));
+        this.accountType = AccountType.valueOf((String) userData.get("AccountType"));
     }
 
     //Setters & Getters
@@ -47,7 +56,7 @@ public class User {
     }
 
     public String getUsername() {
-        return username.get();
+        return this.username.getValue();
     }
 
     public StringProperty usernameProperty() {
@@ -70,16 +79,12 @@ public class User {
         this.email.set(email);
     }
 
-    public String getCountry() {
-        return country.get();
-    }
-
-    public StringProperty countryProperty() {
+    public Countries getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country.set(country);
+    public void setCountry(Countries country) {
+        this.country = country;
     }
 
     public AccountType getAccountType() {
@@ -94,10 +99,10 @@ public class User {
 
         JSONObject user = new JSONObject();
 
-        user.put("Name",this.name);
-        user.put("Username", this.username);
-        user.put("Email", this.email);
-        user.put("Country", this.country);
+        user.put("Name",this.name.getValue());
+        user.put("Username", this.username.getValue());
+        user.put("Email", this.email.getValue());
+        user.put("Country", this.country.toString());
         user.put("AccountType", this.accountType.toString());
 
         return user;
