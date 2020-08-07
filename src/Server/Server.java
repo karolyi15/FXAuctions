@@ -1,5 +1,7 @@
 package Server;
 
+import org.json.simple.JSONObject;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -67,6 +69,37 @@ public class Server {
         this.running = false;
     }
 
+    //Data Base Access
+    public synchronized JSONObject queryUser(String username, String password){
+
+        JSONObject userData = this.dataBase.query("Users", username);
+        JSONObject outputJson = new JSONObject();
+
+        if(userData != null){
+
+            if(userData.get("Password").equals(password)){
+
+                outputJson.put("RequestState",true);
+                outputJson.put("User",userData);
+
+                return outputJson;
+            }
+        }
+
+        outputJson.put("RequestState",false);
+        return outputJson;
+    }
+
+    public synchronized JSONObject addUser(String username, JSONObject userData){
+
+        boolean  requestState = this.dataBase.add("Users",username,userData);
+
+        JSONObject outputJson = new JSONObject();
+
+        outputJson.put("RequestState",requestState);
+
+        return outputJson;
+    }
 
     //Main
     public static void main(String[] args){

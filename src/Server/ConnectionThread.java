@@ -1,5 +1,9 @@
 package Server;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -53,8 +57,7 @@ public class ConnectionThread  extends Thread{
             do {
 
                 inputString = reader.readLine();
-                System.out.println("Input from Client: "+inputString);
-                this.write("Receive");
+                this.parseRequest(inputString);
 
             }while (this.running);
 
@@ -74,5 +77,41 @@ public class ConnectionThread  extends Thread{
     public void write(String output){
 
         this.writer.println(output);
+    }
+
+    private void parseRequest(String inputString){
+
+        JSONParser parser = new JSONParser();
+
+        try{
+
+            JSONObject inputJson = (JSONObject) parser.parse(inputString);
+            long requestID = (long) inputJson.get("Request");
+
+            if(requestID == -1){
+                //Terminate Thread
+                this.terminate();
+
+            }else if(requestID == 0){
+                //Create User
+                JSONObject userData = (JSONObject) inputJson.get("User");
+                String username = (String) userData.get("Username");
+
+                JSONObject requestState = this.server.addUser(username,userData);
+                this.write(requestState.toJSONString());
+
+            }else if(requestID == 1){
+                //Access User
+                String username = (String) inputJson.get("Username");
+                String password = (String) inputJson.get("Password");
+
+                JSONObject userData = this.server.queryUser(username,password);
+                this.write(userData.toJSONString());
+            }
+
+        }catch (ParseException e){
+
+            e.printStackTrace();
+        }
     }
 }

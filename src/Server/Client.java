@@ -13,7 +13,6 @@ public class Client {
     private String hostName = "localhost";
 
     private Socket socket;
-    private boolean running;
 
     //Server Communication
     private BufferedReader reader;
@@ -25,14 +24,11 @@ public class Client {
     //Constructor
     public Client(){
 
-        this.running=false;
     }
 
     public void start() {
 
         try {
-
-            this.running = true;
 
             //Creates socket connection
             this.socket = new Socket(this.hostName, this.port);
@@ -48,11 +44,6 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void terminate(){
-
-        this.running=false;
     }
 
     //Server Communication

@@ -3,12 +3,10 @@ package Controllers.Views;
 import Controllers.MainApp;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import org.json.simple.JSONObject;
 
 public class SignInScene_Controller {
 
@@ -40,9 +38,29 @@ public class SignInScene_Controller {
     @FXML
     private void onHandleSignIn(){
 
-        this.mainApp.getClient().write("SignIn");
-        String serverResponse = this.mainApp.getClient().read();
-        System.out.println(serverResponse);
+        String username = this.username_TextField.getText();
+        String password = this.password_PasswordField.getText();
+
+        if(!username.equals("") && !password.equals("")){
+
+            JSONObject outputJson = new JSONObject();
+            outputJson.put("Request",1);
+            outputJson.put("Username", username);
+            outputJson.put("Password",password);
+
+            this.mainApp.getClient().write(outputJson.toJSONString());
+
+            String inputString = this.mainApp.getClient().read();
+            System.out.println(inputString);
+
+        }else{
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Missing Information");
+            alert.setContentText("Please enter all the fields");
+
+            alert.showAndWait();
+        }
     }
 
     private void onHandleCreateAccount(){

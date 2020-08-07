@@ -5,11 +5,14 @@ import Controllers.Views.SignInScene_Controller;
 import Controllers.Views.SignUpScene_Controller;
 import Server.Client;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
 
@@ -40,9 +43,24 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("FXAuctions");
         this.primaryStage.setResizable(false);
+        this.customCloseRequest();
 
         this.initRootLayout();
         this.showSignInScene();
+    }
+
+    private void customCloseRequest(){
+
+        this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+
+                JSONObject outputJson = new JSONObject();
+                outputJson.put("Request", -1);
+
+                client.write(outputJson.toJSONString());
+            }
+        });
     }
 
     private void initRootLayout(){
@@ -116,8 +134,6 @@ public class MainApp extends Application {
     }
 
     //Setters & Getters
-
-
     public Client getClient() {
         return this.client;
     }
