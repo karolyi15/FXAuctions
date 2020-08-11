@@ -57,6 +57,11 @@ public class MenuScene_Controller {
         this.mainApp.showAuctionsManager(this.displayPanel_BorderPane);
     }
 
+    @FXML
+    private void onHandleSettings(){
+
+        this.mainApp.showSettingsScene(this.displayPanel_BorderPane);
+    }
 
     //Setters & Getters
     public void setMainApp(MainApp mainApp) {

@@ -76,6 +76,29 @@ public final class DataBase {
         }
     }
 
+    public synchronized boolean delete(String category, String object){
+
+        try{
+
+            JSONObject jsonCategory = (JSONObject) this.data.get(category);
+
+            if(jsonCategory.containsKey(object)){
+
+                jsonCategory.remove(object);
+                this.update();
+                return true;
+
+            }else{
+
+                return  false;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     //Management
 
     private void load(){

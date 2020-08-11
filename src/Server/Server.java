@@ -1,10 +1,13 @@
 package Server;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.print.attribute.standard.JobName;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class Server {
 
@@ -21,6 +24,9 @@ public class Server {
     //Server State
     private boolean running;
 
+    //Auctions System
+    private HashMap<String, AuctionRoom> auctionsRegister;
+
     //********************************************************************************************************//
     //******************************************** CLASS METHODS *********************************************//
 
@@ -30,6 +36,8 @@ public class Server {
         this.dataBase = DataBase.getInstance();
 
         this.running = false;
+
+        this.auctionsRegister = new HashMap<String, AuctionRoom>();
     }
 
     public void start(){
@@ -69,7 +77,7 @@ public class Server {
         this.running = false;
     }
 
-    //Data Base Access
+    //Data Base Access Management
     public synchronized JSONObject queryUser(String username, String password){
 
         JSONObject userData = this.dataBase.query("Users", username);
@@ -100,6 +108,52 @@ public class Server {
 
         return outputJson;
     }
+
+    public synchronized  JSONObject deleteUser(String username){
+
+        boolean requestState = this.dataBase.delete("Users",username);
+
+        JSONObject outputJson = new JSONObject();
+
+        outputJson.put("RequestState", requestState);
+
+        return outputJson;
+    }
+
+    //Auctions Rooms Management
+    public synchronized JSONObject getActiveAuctions(){
+
+        JSONObject outputJson = new JSONObject();
+        JSONArray activeAuctions = new JSONArray();
+
+        for(String auction: this.auctionsRegister.keySet()){
+
+            activeAuctions.add(this.auctionsRegister.get(auction));
+        }
+
+        outputJson.put("ActiveAuctions", activeAuctions);
+
+        return outputJson;
+    }
+
+    public synchronized JSONObject createAuctionRoom(JSONObject auctionData){
+
+        String auctionID = (String) auctionData.get("Name");
+        JSONObject outputJson= new JSONObject();
+
+        if(this.auctionsRegister.containsKey(auctionID)){
+
+            outputJson.put("RequestState", false);
+
+        }else{
+
+            this.auctionsRegister.put(auctionID, new AuctionRoom(auctionData));
+            outputJson.put("RequestState", true);
+        }
+
+        return outputJson;
+    }
+
 
     //Main
     public static void main(String[] args){

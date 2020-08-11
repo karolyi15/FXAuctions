@@ -10,10 +10,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Views.AuctionsCreatorScene_Controller">
    <children>
-      <GridPane layoutX="84.0" layoutY="117.0" prefHeight="153.0" prefWidth="287.0">
+      <GridPane layoutX="84.0" layoutY="117.0" prefHeight="153.0" prefWidth="287.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="80.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -35,17 +34,18 @@
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Image:" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="156.0" text="Select Image" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <Label layoutX="51.0" layoutY="58.0" text="Product Description:" />
-      <Label layoutX="61.0" layoutY="259.0" text="Auction Description:" />
+      <Label layoutX="51.0" layoutY="58.0" text="Product Information:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
+      <Label layoutX="61.0" layoutY="259.0" text="Auction Information:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="250.0" />
       <HBox layoutX="379.0" layoutY="456.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" prefWidth="140.0" text="Cancel" />
+            <Button mnemonicParsing="false" onAction="#onHandleCancel" prefWidth="140.0" text="Cancel" />
             <Button mnemonicParsing="false" prefWidth="140.0" text="Confirm" />
          </children>
       </HBox>
-      <GridPane layoutX="50.0" layoutY="287.0" prefHeight="119.0" prefWidth="287.0">
+      <GridPane layoutX="50.0" layoutY="287.0" prefHeight="119.0" prefWidth="287.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="280.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -67,6 +67,6 @@
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <ImageView fitHeight="317.0" fitWidth="200.0" layoutX="429.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="350.0" fitWidth="253.0" layoutX="429.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0" />
    </children>
 </AnchorPane>

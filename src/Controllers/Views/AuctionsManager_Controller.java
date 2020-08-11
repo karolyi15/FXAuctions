@@ -13,6 +13,7 @@ public class AuctionsManager_Controller {
 
     private MainApp mainApp;
     private BorderPane borderPane;
+    private Thread updater;
 
     @FXML
     private TableView activeAuctions_TableView;
@@ -23,6 +24,25 @@ public class AuctionsManager_Controller {
 
     //********************************************************************************************************//
     //******************************************** CLASS METHODS *********************************************//
+
+    //Constructor
+    @FXML
+    private void initialize(){
+
+    }
+
+    private void initUpdater(){
+
+        this.updater = new Thread(){
+
+            public void run(){
+
+
+            }
+        };
+
+        this.updater.start();
+    }
 
     //Handlers
     @FXML

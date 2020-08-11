@@ -107,6 +107,23 @@ public class ConnectionThread  extends Thread{
 
                 JSONObject userData = this.server.queryUser(username,password);
                 this.write(userData.toJSONString());
+
+            }else  if(requestID == 2){
+                //Remove User
+                String username = (String) inputJson.get("Username");
+                JSONObject requestState = this.server.deleteUser(username);
+
+                this.write(requestState.toJSONString());
+
+            }else if (requestID  == 3){
+                //Active Auctions List
+                this.write(this.server.getActiveAuctions().toJSONString());
+
+            }else if(requestID ==4){
+                //Create Auction Room
+                JSONObject auctionData = (JSONObject) inputJson.get("AuctionRoom");
+
+                this.write(this.server.createAuctionRoom(auctionData).toJSONString());
             }
 
         }catch (ParseException e){

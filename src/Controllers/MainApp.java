@@ -1,10 +1,7 @@
 package Controllers;
 
 import Controllers.Models.User;
-import Controllers.Views.AuctionsManager_Controller;
-import Controllers.Views.MenuScene_Controller;
-import Controllers.Views.SignInScene_Controller;
-import Controllers.Views.SignUpScene_Controller;
+import Controllers.Views.*;
 import Server.Client;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -191,10 +188,35 @@ public class MainApp extends Application {
             AnchorPane auctionsCreatorScene = (AnchorPane) loader.load();
 
             //Set Controller
-
+            AuctionsCreatorScene_Controller controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setBorderPane(borderPane);
 
             //Set
             borderPane.setCenter(auctionsCreatorScene);
+
+        }catch (IOException e){
+
+            e.printStackTrace();
+        }
+    }
+
+    public void showSettingsScene(BorderPane borderPane){
+
+        try {
+
+            //Load Fxml File
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("Views/SettingsScene_UI.fxml"));
+            AnchorPane settingsScene = (AnchorPane) loader.load();
+
+            //Set Controller
+            SettingsScene_Controller controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setBorderPane(borderPane);
+
+            //Set
+            borderPane.setCenter(settingsScene);
 
         }catch (IOException e){
 
