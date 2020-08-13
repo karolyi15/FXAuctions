@@ -24,8 +24,7 @@ public class SignUpScene_Controller {
     private TextField email_TextField;
     @FXML
     private ComboBox<Countries> country_ComboBox;
-    @FXML
-    private ComboBox<AccountType> accountType_ComboBox;
+
     @FXML
     private PasswordField password_PasswordField;
     @FXML
@@ -42,17 +41,9 @@ public class SignUpScene_Controller {
     @FXML
     private void initialize(){
 
-        this.initAccountTypes();
         this.initCountries();
     }
 
-    private void initAccountTypes(){
-
-        for(int type=0; type<AccountType.values().length;type++){
-
-            this.accountType_ComboBox.getItems().add(AccountType.values()[type]);
-        }
-    }
 
     private void initCountries(){
 
@@ -71,7 +62,7 @@ public class SignUpScene_Controller {
         fieldsData.put("Username",this.username_TextField.getText());
         fieldsData.put("Email",this.email_TextField.getText());
         fieldsData.put("Country",this.country_ComboBox.getValue().toString());
-        fieldsData.put("AccountType",this.accountType_ComboBox.getValue().toString());
+        fieldsData.put("AccountType",AccountType.NORMAL.toString());
         fieldsData.put("Password",this.password_PasswordField.getText());
 
         return fieldsData;
@@ -87,7 +78,7 @@ public class SignUpScene_Controller {
 
             return false;
 
-        }else if(this.country_ComboBox.getValue() == null || this.accountType_ComboBox.getValue() ==null){
+        }else if(this.country_ComboBox.getValue() == null){
 
             return  false;
 

@@ -24,6 +24,12 @@ public class SettingsScene_Controller {
     private BorderPane borderPane;
 
     @FXML
+    private Label name_Label;
+    @FXML
+    private Label email_Label;
+    @FXML
+    private Label country_Label;
+    @FXML
     private Label deleteAccount_Label;
 
     //********************************************************************************************************//
@@ -36,6 +42,14 @@ public class SettingsScene_Controller {
         this.onHandleDeleteAccount();
     }
 
+    private void showUserInformation(){
+
+        this.name_Label.setText(this.mainApp.getActiveUser().getName());
+        this.email_Label.setText(this.mainApp.getActiveUser().getEmail());
+        this.country_Label.setText(this.mainApp.getActiveUser().getCountry().toString());
+    }
+
+    //Handlers
     private void onHandleDeleteAccount(){
 
         this.deleteAccount_Label.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -109,6 +123,7 @@ public class SettingsScene_Controller {
     //Setters & Getters
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        this.showUserInformation();
     }
 
     public void setBorderPane(BorderPane borderPane) {

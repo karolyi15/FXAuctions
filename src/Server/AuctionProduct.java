@@ -9,9 +9,9 @@ public class AuctionProduct {
 
     private String name;
     private String description;
-    private long basePrice;
-    private long topPrice;
-    private String image;
+    private long initialPrice;
+    private long finalPrice;
+    private long actualPrice;
 
     //********************************************************************************************************//
     //******************************************** CLASS METHODS *********************************************//
@@ -21,30 +21,33 @@ public class AuctionProduct {
 
         this.name  = "";
         this.description = "";
-        this.basePrice = 0;
-        this.topPrice = 0;
-        this.image = "";
+        this.initialPrice = 0;
+        this.finalPrice = 0;
+        this.actualPrice = this.initialPrice;
     }
 
-    public AuctionProduct(String name, String description, long basePrice, long topPrice, String image){
+    public AuctionProduct(String name, String description, long initialPrice, long finalPrice){
 
         this.name  = name;
         this.description = description;
-        this.basePrice = basePrice;
-        this.topPrice = topPrice;
-        this.image = image;
+        this.initialPrice = initialPrice;
+        this.finalPrice = finalPrice;
+        this.actualPrice = this.initialPrice;
+
     }
 
     public AuctionProduct(JSONObject productData){
 
         this.name  = (String) productData.get("Name");
         this.description = (String) productData.get("Description");
-        this.basePrice = (long) productData.get("BasePrice");
-        this.topPrice = (long) productData.get("TopPrice");
-        this.image = (String) productData.get("Image");
+        this.initialPrice = (long) productData.get("InitialPrice");
+        this.finalPrice = (long) productData.get("FinalPrice");
+        this.actualPrice = this.initialPrice;
+
     }
 
     //Setters & Getters
+
     public String getName() {
         return name;
     }
@@ -61,28 +64,20 @@ public class AuctionProduct {
         this.description = description;
     }
 
-    public long getBasePrice() {
-        return basePrice;
+    public long getInitialPrice() {
+        return initialPrice;
     }
 
-    public void setBasePrice(long basePrice) {
-        this.basePrice = basePrice;
+    public void setInitialPrice(long initialPrice) {
+        this.initialPrice = initialPrice;
     }
 
-    public long getTopPrice() {
-        return topPrice;
+    public long getFinalPrice() {
+        return finalPrice;
     }
 
-    public void setTopPrice(long topPrice) {
-        this.topPrice = topPrice;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
+    public void setFinalPrice(long finalPrice) {
+        this.finalPrice = finalPrice;
     }
 
     //Communication
@@ -92,9 +87,9 @@ public class AuctionProduct {
 
         outputJson.put("Name", this.name);
         outputJson.put("Description", this.description);
-        outputJson.put("BasePrice", this.basePrice);
-        outputJson.put("TopPrice", this.topPrice);
-        outputJson.put("Image", this.image);
+        outputJson.put("InitialPrice", this.initialPrice);
+        outputJson.put("FinalPrice", this.finalPrice);
+        outputJson.put("ActualPrice", this.actualPrice);
 
         return outputJson;
     }

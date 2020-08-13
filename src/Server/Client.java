@@ -3,7 +3,7 @@ package Server;
 import java.io.*;
 import java.net.Socket;
 
-public class Client {
+public class Client implements iClient{
 
     //********************************************************************************************************//
     //********************************************* CLASS FIELDS *********************************************//

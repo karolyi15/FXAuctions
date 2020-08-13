@@ -23,7 +23,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
@@ -32,14 +31,12 @@
             <TextField fx:id="username_TextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Name:" />
             <Label text="Username:" GridPane.rowIndex="1" />
-            <Label text="Password:" GridPane.rowIndex="5" />
-            <PasswordField fx:id="password_PasswordField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Password:" GridPane.rowIndex="4" />
+            <PasswordField fx:id="password_PasswordField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Country:" GridPane.rowIndex="3" />
             <ComboBox fx:id="country_ComboBox" prefHeight="26.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <PasswordField fx:id="confirmPassword_PasswordField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="Confirm Password:" GridPane.rowIndex="6" />
-            <Label text="Account Type: " GridPane.rowIndex="4" />
-            <ComboBox fx:id="accountType_ComboBox" prefHeight="26.0" prefWidth="224.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <PasswordField fx:id="confirmPassword_PasswordField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Confirm Password:" GridPane.rowIndex="5" />
             <Label text="Email:" GridPane.rowIndex="2" />
             <TextField fx:id="email_TextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>

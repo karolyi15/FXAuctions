@@ -4,82 +4,28 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.*;
 import java.net.Socket;
 
-public class ConnectionThread  extends Thread{
+public class FXAuctionsServerThread extends WriterServerThread{
 
     //********************************************************************************************************//
     //********************************************* CLASS FIELDS *********************************************//
 
-    //Server Connection
-    private Server server;
-    private Socket socket;
-
-    //Client Communication
-    private PrintWriter writer;
-
-    //Connection State
-    private boolean running;
+    private FXAuctionsServer fxAuctionsServer;
 
     //********************************************************************************************************//
     //******************************************** CLASS METHODS *********************************************//
 
     //Constructor
-    public  ConnectionThread(Server server, Socket socket){
+    public FXAuctionsServerThread(FXAuctionsServer FXAuctionsServer, Socket socket){
 
-        this.server = server;
-        this.socket = socket;
-
-        this.running = false;
-    }
-
-    public void run(){
-
-        try {
-
-            //Connection State
-            this.running = true;
-
-            //Read data from the client (read to byte array)
-            InputStream input = socket.getInputStream();
-            //Set byte array to string
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-
-
-            //Write data as a byte array
-            OutputStream output = socket.getOutputStream();
-            //Converts byte array to text format
-            this.writer = new PrintWriter(output, true);
-
-            String inputString;
-
-            do {
-
-                inputString = reader.readLine();
-                this.parseRequest(inputString);
-
-            }while (this.running);
-
-            socket.close();
-
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void terminate(){
-
-        this.running = false;
+        super(FXAuctionsServer,socket);
+        this.fxAuctionsServer = (FXAuctionsServer) this.server;
     }
 
     //Client Communication
-    public void write(String output){
-
-        this.writer.println(output);
-    }
-
-    private void parseRequest(String inputString){
+    @Override
+    protected void parseInputString(String inputString){
 
         JSONParser parser = new JSONParser();
 
@@ -97,7 +43,7 @@ public class ConnectionThread  extends Thread{
                 JSONObject userData = (JSONObject) inputJson.get("User");
                 String username = (String) userData.get("Username");
 
-                JSONObject requestState = this.server.addUser(username,userData);
+                JSONObject requestState = this.fxAuctionsServer.addUser(username,userData);
                 this.write(requestState.toJSONString());
 
             }else if(requestID == 1){
@@ -105,25 +51,33 @@ public class ConnectionThread  extends Thread{
                 String username = (String) inputJson.get("Username");
                 String password = (String) inputJson.get("Password");
 
-                JSONObject userData = this.server.queryUser(username,password);
+                JSONObject userData = this.fxAuctionsServer.queryUser(username,password);
                 this.write(userData.toJSONString());
 
             }else  if(requestID == 2){
                 //Remove User
                 String username = (String) inputJson.get("Username");
-                JSONObject requestState = this.server.deleteUser(username);
+                JSONObject requestState =this.fxAuctionsServer.deleteUser(username);
 
                 this.write(requestState.toJSONString());
 
             }else if (requestID  == 3){
-                //Active Auctions List
-                this.write(this.server.getActiveAuctions().toJSONString());
+                //Get active Auctions List
+                this.write(this.fxAuctionsServer.getActiveAuctions().toJSONString());
 
             }else if(requestID ==4){
                 //Create Auction Room
                 JSONObject auctionData = (JSONObject) inputJson.get("AuctionRoom");
+                String username = (String) inputJson.get("Username");
 
-                this.write(this.server.createAuctionRoom(auctionData).toJSONString());
+                this.write(this.fxAuctionsServer.createAuctionRoom(username, this, auctionData).toJSONString());
+
+            }else if(requestID ==5){
+                //Join Auction Room
+                String auctionRoom = (String) inputJson.get("AuctionRoom");
+                String username = (String) inputJson.get("Username");
+
+                this.write(this.fxAuctionsServer.joinAuctionRoom(auctionRoom, username, this).toJSONString());
             }
 
         }catch (ParseException e){
