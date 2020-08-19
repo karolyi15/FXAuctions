@@ -80,6 +80,14 @@ public class AuctionProduct {
         this.finalPrice = finalPrice;
     }
 
+    public long getActualPrice() {
+        return actualPrice;
+    }
+
+    public void setActualPrice(long actualPrice) {
+        this.actualPrice = actualPrice;
+    }
+
     //Communication
     public JSONObject toJson(){
 

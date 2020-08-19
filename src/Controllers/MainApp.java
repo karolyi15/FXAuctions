@@ -1,5 +1,7 @@
 package Controllers;
 
+import Controllers.Models.Room;
+import Controllers.Models.RoomType;
 import Controllers.Models.User;
 import Controllers.Views.*;
 import Server.Client;
@@ -222,6 +224,31 @@ public class MainApp extends Application {
 
             e.printStackTrace();
         }
+    }
+
+    public void showAuctionRoom(RoomType type, Room room){
+
+        try {
+
+            //Load Fxml File
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("Views/AuctionRoomScene_UI.fxml"));
+            AnchorPane auctionRoomScene = (AnchorPane) loader.load();
+
+            //Set Controller
+            AuctionRoomScene_Controller controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setType(type);
+            controller.setAuctionRoom(room);
+
+            //Set
+           this.rootLayout.setCenter(auctionRoomScene);
+
+        }catch (IOException e){
+
+            e.printStackTrace();
+        }
+
     }
 
     //Setters & Getters

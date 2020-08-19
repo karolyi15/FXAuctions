@@ -78,6 +78,14 @@ public class FXAuctionsServerThread extends WriterServerThread{
                 String username = (String) inputJson.get("Username");
 
                 this.write(this.fxAuctionsServer.joinAuctionRoom(auctionRoom, username, this).toJSONString());
+
+            }else if(requestID ==7){
+
+                String username = (String) inputJson.get("Username");
+                String auctionRoom = (String) inputJson.get("AuctionRoom");
+                long price = (long) inputJson.get("Price");
+
+                this.fxAuctionsServer.newOffer(auctionRoom,username,price);
             }
 
         }catch (ParseException e){

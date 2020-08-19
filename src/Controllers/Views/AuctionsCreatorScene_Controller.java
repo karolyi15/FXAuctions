@@ -1,6 +1,8 @@
 package Controllers.Views;
 
 import Controllers.MainApp;
+import Controllers.Models.Room;
+import Controllers.Models.RoomType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -82,7 +84,9 @@ public class AuctionsCreatorScene_Controller {
                 alert.setContentText("You create a new auction room");
 
                 alert.showAndWait();
-                //Pasar al room
+
+                this.mainApp.showAuctionRoom(RoomType.OWNER, new Room(this.productName_TextField.getText()));
+
             }else{
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);

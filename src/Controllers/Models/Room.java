@@ -18,6 +18,12 @@ public class Room {
     //******************************************** CLASS METHODS *********************************************//
 
     //Constructor
+    public Room(String name){
+        this.productName = new SimpleStringProperty(name);
+        this.productDescription = new SimpleStringProperty("");
+        this.status = new SimpleStringProperty("OPEN");
+    }
+
     public Room(JSONObject auctionRoomData){
 
         JSONObject productData = (JSONObject) auctionRoomData.get("Product");

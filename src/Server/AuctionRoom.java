@@ -16,6 +16,8 @@ public class AuctionRoom {
     private AuctionStatus status;
     private HashMap<String, FXAuctionsServerThread> participants;
     private FXAuctionsServerThread owner;
+    private Thread updater;
+
 
     //********************************************************************************************************//
     //******************************************** CLASS METHODS *********************************************//
@@ -29,6 +31,7 @@ public class AuctionRoom {
         this.end = "";
         this.status = AuctionStatus.OPEN;
         this.participants = new HashMap<>();
+
     }
 
     public AuctionRoom(String username, FXAuctionsServerThread thread,JSONObject auctionData){
@@ -41,6 +44,31 @@ public class AuctionRoom {
 
         this.participants.put(username, thread);
         this.owner = thread;
+        this.initUpdater();
+
+    }
+
+    private void initUpdater(){
+
+        this.updater = new Thread(){
+
+            public void run(){
+
+                while(status == AuctionStatus.OPEN){
+
+                    JSONObject outputJson = new JSONObject();
+                    outputJson.put("Request", 6);
+                    outputJson.put("AuctionRoom", toJson());
+
+                    for (String client : participants.keySet()){
+
+                        participants.get(client).write(outputJson.toJSONString());
+                    }
+                }
+            }
+        };
+
+        this.updater.start();
     }
 
     //Join Auction Room
@@ -60,6 +88,14 @@ public class AuctionRoom {
 
     public void newOffer(String username, long price){
 
+      if(price> this.product.getActualPrice()){
+
+          if(price> this.product.getFinalPrice()){
+
+              this.product.setFinalPrice(price);
+          }
+          this.product.setActualPrice(price);
+      }
     }
 
     //Setters & Getters

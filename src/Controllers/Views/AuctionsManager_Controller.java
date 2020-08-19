@@ -2,6 +2,7 @@ package Controllers.Views;
 
 import Controllers.MainApp;
 import Controllers.Models.Room;
+import Controllers.Models.RoomType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +15,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import java.util.ArrayList;
 
 public class AuctionsManager_Controller {
 
@@ -45,7 +48,7 @@ public class AuctionsManager_Controller {
     //Constructor
     public AuctionsManager_Controller(){
 
-        this.activeRooms = FXCollections.emptyObservableList();
+        this.activeRooms = FXCollections.observableArrayList();
         this.updating = false;
     }
 
@@ -99,12 +102,18 @@ public class AuctionsManager_Controller {
             JSONObject inputJson = (JSONObject) parser.parse(inputString);
             JSONArray auctionRooms = (JSONArray) inputJson.get("ActiveAuctions");
 
+            this.activeRooms.clear();
+            //ArrayList<Room> auctionsList = new ArrayList<>();
+
             for(int room=0;room<auctionRooms.size();room++){
 
                 JSONObject tempRoom = (JSONObject)  auctionRooms.get(room);
-                //this.activeRooms.add(new Room(tempRoom));
+                //auctionsList.add(new Room(tempRoom));
+                this.activeRooms.add(new Room(tempRoom));
 
             }
+
+            //this.activeRooms.addAll(auctionsList);
 
             this.activeAuctions_TableView.setItems(this.activeRooms);
 
@@ -151,7 +160,7 @@ public class AuctionsManager_Controller {
     }
 
     private void parseJoinRequest(String inputString){
-
+        System.out.println(inputString);
         JSONParser parser = new JSONParser();
 
         try{
@@ -161,11 +170,8 @@ public class AuctionsManager_Controller {
 
             if(requestState){
                 this.updating = false;
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setHeaderText("Auction Room Created");
-                alert.setContentText("You create a new auction room");
 
-                alert.showAndWait();
+                this.mainApp.showAuctionRoom(RoomType.CLIENT, this.activeAuctions_TableView.selectionModelProperty().get().getSelectedItem());
 
             }else {
 
